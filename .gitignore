@@ -1,0 +1,4 @@
+# Bỏ qua thư mục môi trường ảo Python
+venv/
+# Bỏ qua thư mục data
+data/
