@@ -30,7 +30,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
-warnings.filterwarnings('ignore')
+import wandb # Dùng để theo dõi training (nếu cần)
+
+warnings.filterwarnings('ignore') # Ignore warnings để log gọn hơn
 
 class OptimizedLanguageClassifierTrainer:
     """Trainer được tối ưu cho RTX 3050 4GB VRAM"""
@@ -183,15 +185,15 @@ class OptimizedLanguageClassifierTrainer:
               batch_size=6,              # ⚙️ Giảm từ 8 → 6 cho an toàn
               gradient_accumulation=2,   # ⚙️ Effective batch = 6*2 = 12
               learning_rate=2e-5,
-              warmup_ratio=0.1,
+              warmup_ratio=0.1,          # ⚙️ 10% warmup
               weight_decay=0.01,
               # Memory optimization
               fp16=True,                 # ⚙️ Mixed precision training
               max_grad_norm=1.0,         # ⚙️ Gradient clipping
               # Evaluation & Saving
               eval_steps=100,            # ⚙️ Evaluate mỗi 100 steps
-              save_steps=100,
-              logging_steps=50):
+              save_steps=100,            # ⚙️ Save mỗi 100 steps
+              logging_steps=50):         # ⚙️ Log mỗi 50 steps
         """
         Fine-tune model với cấu hình tối ưu cho RTX 3050
         
@@ -231,7 +233,7 @@ class OptimizedLanguageClassifierTrainer:
             num_labels=self.num_labels,
             id2label=self.id2label,
             label2id=self.label_map,
-            torch_dtype=torch.float16 if fp16 else torch.float32  # ⚙️ Load model ở dtype phù hợp
+            # torch_dtype=torch.float16 if fp16 else torch.float32  # ⚙️ (ValueError: Attempting to unscale FP16 gradients.)
         )
         
         # Count parameters
@@ -280,7 +282,7 @@ class OptimizedLanguageClassifierTrainer:
             save_total_limit=2,                       # ⚙️ Chỉ giữ 2 checkpoints tốt nhất (tiết kiệm disk)
             load_best_model_at_end=True,              # ⚙️ Load model tốt nhất sau training
             metric_for_best_model="f1",               # ⚙️ Chọn model theo F1 score
-            greater_is_better=True,
+            greater_is_better=True,                   # ⚙️ F1 càng cao càng tốt
             
             # Training hyperparameters
             num_train_epochs=epochs,
@@ -290,25 +292,28 @@ class OptimizedLanguageClassifierTrainer:
             
             # Optimization
             learning_rate=learning_rate,
-            weight_decay=weight_decay,
+            weight_decay=weight_decay,                # ⚙️ Weight decay để tránh overfitting
             warmup_steps=warmup_steps,                # ⚙️ Warmup để model ổn định
             max_grad_norm=max_grad_norm,              # ⚙️ Clip gradients tránh explode
             optim="adamw_torch",                      # ⚙️ AdamW optimizer của PyTorch
             
             # Performance optimization - QUAN TRỌNG CHO RTX 3050 4GB
             fp16=fp16 and self.device == "cuda",      # ⚙️ Mixed precision (tiết kiệm 40-50% VRAM)
-            fp16_opt_level="O1",                      # ⚙️ O1 = conservative mixed precision (ổn định)
-            dataloader_num_workers=2,                 # ⚙️ 2 workers cho RTX 3050
-            dataloader_pin_memory=True,               # ⚙️ Pin memory tăng tốc độ transfer
+            fp16_opt_level="O1",                      # ⚙️ O1 = conservative mixed precision (ổn định) hoặc O2 = more aggressive (tiết kiệm VRAM hơn nhưng có thể less stable)
+            dataloader_num_workers=2,                 # ⚙️ 2 workers cho RTX 3050 (giảm VRAM sử dụng)
+            dataloader_pin_memory=True,               # ⚙️ Pin memory tăng tốc độ transfer data lên GPU
             gradient_checkpointing=False,             # ⚙️ Tắt để tăng tốc (trade memory for speed)
             
             # Logging
             logging_dir=str(output_path / 'logs'),
             logging_steps=logging_steps,
             logging_first_step=True,
+
+            # Report to WandB
+            report_to="wandb",                                                  # 🔥 BẬT WandB
+            run_name=f"xlm-roberta-base-run-bs{batch_size}-lr{learning_rate}",  # 🔥 Tên run trên WandB
             
-            # Other
-            report_to="none",                         # ⚙️ Tắt wandb/tensorboard
+            # Other settings
             disable_tqdm=False,
             remove_unused_columns=True,
             label_names=["labels"],
@@ -481,6 +486,18 @@ class OptimizedLanguageClassifierTrainer:
         print(f"Precision: {precision:.4f}")
         print(f"Recall:    {recall:.4f}")
         print(f"F1-Score:  {f1:.4f}")
+
+        # Log Confusion Matrix lên WandB
+        wandb.log({
+            "test/confusion_matrix": wandb.plot.confusion_matrix(
+                probs=None,
+                y_true=true_labels, 
+                preds=pred_labels,
+                class_names=list(self.language_names.values())
+            ),
+            "test/accuracy": accuracy,
+            "test/f1": f1
+        })
         
         # Per-class metrics (chi tiết từng ngôn ngữ)
         print("\n" + "="*70)
@@ -604,6 +621,14 @@ def main():
         num_labels=4,
         max_length=CONFIG['max_length']
     )
+
+    # Khởi tạo WandB project
+    wandb.init(
+        project="pdf-language-classification",    # Tên dự án quản lý trên web
+        name=f"xlm-roberta-base-run-bs{CONFIG['batch_size']}-lr{CONFIG['learning_rate']}", # Tên lần chạy
+        config=CONFIG,                            # Gửi dictionary cấu hình lên để lưu lại
+        reinit=True                               # Cho phép chạy lại trong cùng 1 process
+    )
     
     # ============ LOAD DATASETS ============
     datasets = trainer_obj.load_datasets()
@@ -645,6 +670,11 @@ def main():
     print(f"   3. Run Streamlit demo: streamlit run app.py")
     
     print("\n" + "="*70)
+
+    # ============ KẾT THÚC WANDB ============
+    print("Đang đồng bộ dữ liệu lên WandB...")
+    wandb.finish()
+    # --------------------------------------
 
 
 if __name__ == "__main__":

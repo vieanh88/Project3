@@ -4,17 +4,17 @@ Hệ thống phân loại ngôn ngữ tự động từ file PDF sử dụng XLM
 
 ## 📊 Dataset
 
-- **Tổng số PDFs:** 9,055 files
+- **Tổng số PDFs:** 9,686 files
 - **Ngôn ngữ:**
-  - 🇻🇳 Vietnamese: 2,417 files
-  - 🇯🇵 Japanese: 2,422 files
-  - 🇰🇷 Korean: 1,756 files
-  - 🇺🇸 English: 2,460 files
+  - 🇯🇵 Japanese: 3,467 files
+  - 🇰🇷 Korean: 1,852 files
+  - 🇺🇸 English: 2,447 files
+  - 🇻🇳 Vietnamese: 1,920 files
 
 ## 🎯 Performance
 
-- **Accuracy:** 96-98%
-- **F1-Score:** 0.96-0.98
+- **Accuracy:** 98.93%
+- **F1-Score:** 0.9893
 - **Inference time:** ~0.5s/PDF
 
 ## 🛠️ Technology Stack
@@ -23,14 +23,14 @@ Hệ thống phân loại ngôn ngữ tự động từ file PDF sử dụng XLM
 - **Framework:** PyTorch + Transformers
 - **PDF Processing:** PyMupdf
 - **UI:** Streamlit
-- **Visualization:** Plotly
+- **Visualization:** Plotly + WandB
 
 ## 💻 System Requirements
 
-- **GPU:** NVIDIA RTX 3050 (4GB VRAM) hoặc cao hơn
-- **CUDA:** 12.1+
+- **GPU:** NVIDIA RTX 3050 (4GB VRAM)
+- **CUDA:** 12.5
 - **Python:** 3.10.11
-- **RAM:** 8GB+
+- **RAM:** 16GB
 - **Storage:** ~5GB (model + data)
 
 ## 📦 Installation
@@ -61,10 +61,10 @@ python check_cuda.py
 Copy your PDF folders (vn/jp/kr/us) to `data/raw/`:
 ```
 data/raw/
-├── vn/  (2,417 PDFs)
-├── jp/  (2,422 PDFs)
-├── kr/  (1,756 PDFs)
-└── us/  (2,460 PDFs)
+├── vn/  (1,920 PDFs)
+├── jp/  (3,467 PDFs)
+├── kr/  (1,852 PDFs)
+└── us/  (2,447 PDFs)
 ```
 
 ### 2. Process Data
@@ -72,14 +72,14 @@ data/raw/
 python src/data_processing.py
 ```
 
-Time: ~2-3 hours for 9K PDFs
+Time: ~2-3 hours for ~10K PDFs
 
 ### 3. Train Model
 ```bash
 python src/train.py
 ```
 
-Time: ~3-4 hours (3 epochs)
+Time: ~2-3 hours (3 epochs)
 
 ### 4. Run Demo
 ```bash
@@ -103,6 +103,7 @@ pdf_language_classifier/
 ├── models/                 # Trained models
 ├── app.py                  # Streamlit demo
 ├── check_cuda.py           # CUDA verification
+├── data_analyst.py         # Analyst PDFs data
 ├── requirements.txt
 └── README.md
 ```

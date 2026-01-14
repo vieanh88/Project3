@@ -1,4 +1,10 @@
 # Bỏ qua thư mục môi trường ảo Python
 venv/
-# Bỏ qua thư mục data
+# Bỏ qua thư mục data/raw chứa dữ liệu thô
 data/
+# Bỏ qua file mô hình đã huấn luyện
+models/
+# Bỏ qua file cấu hình của Weights & Biases
+wandb/
+# Bỏ qua file chứa API keys hoặc thông tin nhạy cảm
+key.txt

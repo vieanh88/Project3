@@ -390,7 +390,7 @@ def main():
     print("="*70)
     
     df = processor.process_all_pdfs(
-        max_samples_per_class=10,  # Lấy tất cả, hoặc giới hạn để test nhanh
+        max_samples_per_class=None,  # None = Lấy tất cả, hoặc giới hạn để test nhanh
         min_text_length=100
     )
     
