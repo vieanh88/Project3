@@ -1,6 +1,6 @@
 """
 Streamlit Demo cho PDF Language Classifier
-Author: CS Student
+Author: Nguyễn Việt Anh - 20215307
 """
 
 import streamlit as st
@@ -300,7 +300,7 @@ def main():
             st.info("Bạn có thể test với các file PDF bất kỳ. Đảm bảo PDF là text-based (không phải scan/ảnh).")
         
         st.divider()
-        st.markdown("Made with ❤️ by CS Student")
+        st.markdown("Made with ❤️ by Nguyễn Việt Anh - 20215307")
     
     # Main content
     st.markdown("---")

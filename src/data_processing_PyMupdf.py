@@ -54,7 +54,7 @@ class PDFDataProcessor:
         }
     
     # Trích xuất text từ PDF sử dụng PyMuPDF
-    def extract_text_from_pdf(self, pdf_path, max_chars=5000):
+    def extract_text_from_pdf(self, pdf_path, max_chars=50000):
         """
         Trích xuất text từ PDF sử dụng PyMuPDF (Tốt hơn cho tiếng Việt)
         """

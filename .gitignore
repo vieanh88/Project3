@@ -6,5 +6,11 @@ data/
 models/
 # Bỏ qua file cấu hình của Weights & Biases
 wandb/
+# Bỏ qua thư mục cache của Python
+__pycache__/
+*.pyc
 # Bỏ qua file chứa API keys hoặc thông tin nhạy cảm
 key.txt
+# Bỏ qua file hướng dẫn
+CHUNKING_STRATEGY_GUIDE.md
+training_parameters_guide.md
