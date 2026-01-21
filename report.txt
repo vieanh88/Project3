@@ -106,3 +106,111 @@ Tổng samples: 8,721
    ✓ data/processed/label_mapping.json
    ✓ data/processed/processing_stats.json
    ✓ data/processed/plots/ (3 biểu đồ)
+
+# LẦN CHẠY THỨ 2 SAU KHI LỌC DATA 1 LẦN NỮA
+======================================================================
+📊 TỔNG KẾT XỬ LÝ
+======================================================================
+Tổng files xử lý: 9674
+Thành công: 8710 (90.0%)
+Lỗi: 20
+Text quá ngắn: 944
+
+Dataset cuối cùng: 8710 samples
+
+✅ Đã lưu full dataset: data\processed\full_dataset.csv
+
+======================================================================
+BƯỚC 2: PHÂN TÍCH DỮ LIỆU
+======================================================================
+
+======================================================================
+📈 PHÂN TÍCH DATASET
+======================================================================
+
+1️⃣  PHÂN BỐ SỐ LƯỢNG:
+   JP (Japanese): 3,243 samples (37.2%)
+   KR (Korean): 1,641 samples (18.8%)
+   US (English): 2,338 samples (26.8%)
+   VN (Vietnamese): 1,488 samples (17.1%)
+
+2️⃣  THỐNG KÊ ĐỘ DÀI TEXT:
+           count         mean          std    min     25%     50%     75%     max
+language
+jp        3243.0  3040.261795  1759.202066  107.0  1322.5  3042.0  5000.0  5000.0
+kr        1641.0  3808.260207  1652.270408  117.0  2136.0  5000.0  5000.0  5000.0
+us        2338.0  4202.024808  1364.461741  100.0  3624.0  5000.0  5000.0  5000.0
+vn        1488.0  4102.823925  1539.747369  131.0  3444.0  5000.0  5000.0  5000.0
+
+3️⃣  VÍ DỤ TEXT TỪ MỖI NGÔN NGỮ:
+
+   [JP] accobrands.co.jp_1522807-01-nsw-enhanced-wireless-controller-with-lumectra-user-manual.pdf
+   1 USER MANUAL | MANUEL DE L’UTILISATEUR | ユーザーマニュアル | MANUAL DE USUARIO | BEDIENUNGSANLEITUNG | MANUALE PER L’USO | MANUAL DO USUÁRIO POWERA ENHANCED ...
+
+   [KR] 100_mountain_ebook.pdf
+   꼭 한 번 가 볼 우 리 1 0 0 대 명 산 도전해 볼 100대 명산 Come and Visit Challenge Korea’s Top 100 Mountains 발간등록번호 11-1400000-000886-01 일러두기 • 산의 게재 순서는 가나 다순을 따름 • 산의 ...
+
+   [US] aclanthology.org_2020.aacl-demo.0.pdf
+   AACL-IJCNLP 2020 The 1st Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics & The 10th International Joint Confer...
+
+   [VN] acbs.com.vn_Huong-dan-mua-CW-dot-3-nam-2025.pdf
+   ĐẶT MUA TRÊN TRANG GIAO DỊCH WEB TRADING Ngân hàng BIDV - Chi nhánh Nam Kỳ Khởi Nghĩa 8660023978 8640023977 8630023983 8610023982 8680015320 TCB10M91 ...
+
+✅ Đã lưu plots vào: data\processed\plots
+
+======================================================================
+BƯỚC 3: CHIA DATASET
+======================================================================
+
+======================================================================
+✂️  CHIA DATASET
+======================================================================
+
+Tổng samples: 8,710
+
+📊 Phân chia:
+   Train: 6,097 samples (70.0%)
+   Val:   1,306 samples (15.0%)
+   Test:  1,307 samples (15.0%)
+
+📈 Phân bố mỗi split:
+
+   Train:
+      JP: 2,270
+      KR: 1,149
+      US: 1,637
+      VN: 1,041
+
+   Val:
+      JP: 486
+      KR: 246
+      US: 350
+      VN: 224
+
+   Test:
+      JP: 487
+      KR: 246
+      US: 351
+      VN: 223
+
+✅ Đã lưu splits vào: data\processed\splits/
+   - train.csv
+   - val.csv
+   - test.csv
+
+✅ Đã lưu metadata:
+   - data\processed\label_mapping.json
+   - data\processed\processing_stats.json
+
+======================================================================
+🎉 HOÀN THÀNH XỬ LÝ DỮ LIỆU!
+======================================================================
+
+📁 Các files đã tạo:
+   ✓ data/processed/full_dataset.csv
+   ✓ data/processed/splits/train.csv
+   ✓ data/processed/splits/val.csv
+   ✓ data/processed/splits/test.csv
+   ✓ data/processed/label_mapping.json
+   ✓ data/processed/processing_stats.json
+   ✓ data/processed/plots/ (3 biểu đồ)

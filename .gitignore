@@ -11,6 +11,7 @@ __pycache__/
 *.pyc
 # Bỏ qua file chứa API keys hoặc thông tin nhạy cảm
 key.txt
+report.txt
 # Bỏ qua file hướng dẫn
 CHUNKING_STRATEGY_GUIDE.md
 training_parameters_guide.md

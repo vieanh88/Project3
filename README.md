@@ -4,10 +4,10 @@ Hệ thống phân loại ngôn ngữ tự động từ file PDF sử dụng XLM
 
 ## 📊 Dataset
 
-- **Tổng số PDFs:** 9,686 files
+- **Tổng số PDFs:** 9,674 files
 - **Ngôn ngữ:**
-  - 🇯🇵 Japanese: 3,467 files
-  - 🇰🇷 Korean: 1,852 files
+  - 🇯🇵 Japanese: 3,463 files
+  - 🇰🇷 Korean: 1,844 files
   - 🇺🇸 English: 2,447 files
   - 🇻🇳 Vietnamese: 1,920 files
 
@@ -62,8 +62,8 @@ Copy your PDF folders (vn/jp/kr/us) to `data/raw/`:
 ```
 data/raw/
 ├── vn/  (1,920 PDFs)
-├── jp/  (3,467 PDFs)
-├── kr/  (1,852 PDFs)
+├── jp/  (3,463 PDFs)
+├── kr/  (1,844 PDFs)
 └── us/  (2,447 PDFs)
 ```
 
