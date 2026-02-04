@@ -155,12 +155,6 @@ CONFIG = {
 }
 ```
 
-### If Out of Memory
-
-1. Reduce `batch_size` to 6 or 4
-2. Reduce `max_length` to 256
-3. Close other GPU applications
-
 ## 📊 Model Details
 
 - **Architecture:** XLM-RoBERTa Base
@@ -169,25 +163,6 @@ CONFIG = {
 - **Max sequence length:** 512 tokens
 - **Training time:** ~3-4 hours on RTX 3050
 - **Inference time:** ~0.5s per PDF
-
-## 🐛 Troubleshooting
-
-### CUDA not available
-```bash
-# Reinstall PyTorch with CUDA
-pip uninstall torch torchvision torchaudio
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-```
-
-### Out of Memory
-- Reduce batch_size in training config
-- Reduce max_length
-- Use gradient accumulation
-
-### PDF extraction fails
-- Ensure PDFs are text-based (not scanned images)
-- Check PDF is not corrupted
-- Update pdfminer: `pip install --upgrade pdfminer.six`
 
 ## 📝 Notes
 
@@ -207,13 +182,5 @@ Created by HUST Student: NGUYEN VIET ANH
 ## 📄 License
 
 This project is for educational purposes.
-
-## 🙏 Acknowledgments
-
-- Hugging Face for XLM-RoBERTa model
-- Anthropic for Claude AI assistance
-- Computer Science Department
-
----
 
 **⭐ If you find this project useful, please give it a star!**
