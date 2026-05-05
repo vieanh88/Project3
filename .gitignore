@@ -1,5 +1,5 @@
 # Bỏ qua thư mục môi trường ảo Python
-venv/
+.venv/
 # Bỏ qua thư mục data/raw chứa dữ liệu thô
 data/
 # Bỏ qua file mô hình đã huấn luyện
@@ -15,3 +15,8 @@ report.txt
 # Bỏ qua file hướng dẫn
 CHUNKING_STRATEGY_GUIDE.md
 training_parameters_guide.md
+# Bỏ qua file .env chứa biến môi trường
+.env
+# Bỏ qua 2 file docx báo cáo, chỉ để lại file PDF
+Báo cáo tiến độ thực hiện Project 3.docx
+NGUYỄN VIỆT ANH-20215307_BÁO CÁO PROJECT3_Final.docx
